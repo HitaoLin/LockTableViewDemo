@@ -119,47 +119,47 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
         ArrayList<String> datas = mTableDatas.get(position);
         if (isLockFristRow) {
             //第一行是锁定的
-            createRowView(holder.mLinearLayout, datas, false, mRowMaxHeights.get(position + 1),position);
+            createRowView(holder.mLinearLayout, datas, false, mRowMaxHeights.get(position + 1), position);
         } else {
             if (position == 0) {
                 holder.mLinearLayout.setBackgroundColor(ContextCompat.getColor(mContext, mFristRowBackGroudColor));
-                createRowView(holder.mLinearLayout, datas, true, mRowMaxHeights.get(position),position);
-            }else {
-                createRowView(holder.mLinearLayout, datas, false, mRowMaxHeights.get(position),position);
+                createRowView(holder.mLinearLayout, datas, true, mRowMaxHeights.get(position), position);
+            } else {
+                createRowView(holder.mLinearLayout, datas, false, mRowMaxHeights.get(position), position);
             }
 
         }
 
         //添加事件
-        if(mOnItemClickListenter!=null){
+        if (mOnItemClickListenter != null) {
             holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mOnItemSelectedListenter!=null){
-                        mOnItemSelectedListenter.onItemSelected(v,position);
+                    if (mOnItemSelectedListenter != null) {
+                        mOnItemSelectedListenter.onItemSelected(v, position);
                     }
-                    if(isLockFristRow){
-                        mOnItemClickListenter.onItemClick(v,position+1);
-                    }else{
-                        if(position!=0){
-                            mOnItemClickListenter.onItemClick(v,position);
+                    if (isLockFristRow) {
+                        mOnItemClickListenter.onItemClick(v, position + 1);
+                    } else {
+                        if (position != 0) {
+                            mOnItemClickListenter.onItemClick(v, position);
                         }
                     }
                 }
             });
         }
-        if(mOnItemLongClickListenter!=null){
+        if (mOnItemLongClickListenter != null) {
             holder.mLinearLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    if(mOnItemSelectedListenter!=null){
-                        mOnItemSelectedListenter.onItemSelected(v,position);
+                    if (mOnItemSelectedListenter != null) {
+                        mOnItemSelectedListenter.onItemSelected(v, position);
                     }
-                    if (isLockFristRow){
-                        mOnItemLongClickListenter.onItemLongClick(v,position+1);
-                    }else{
-                        if(position!=0){
-                            mOnItemLongClickListenter.onItemLongClick(v,position);
+                    if (isLockFristRow) {
+                        mOnItemLongClickListenter.onItemLongClick(v, position + 1);
+                    } else {
+                        if (position != 0) {
+                            mOnItemLongClickListenter.onItemLongClick(v, position);
                         }
                     }
                     return true;
@@ -167,20 +167,20 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
             });
         }
         //如果没有设置点击事件和长按事件
-        if(mOnItemClickListenter==null&&mOnItemLongClickListenter==null){
+        if (mOnItemClickListenter == null && mOnItemLongClickListenter == null) {
             holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mOnItemSelectedListenter!=null){
-                        mOnItemSelectedListenter.onItemSelected(v,position);
+                    if (mOnItemSelectedListenter != null) {
+                        mOnItemSelectedListenter.onItemSelected(v, position);
                     }
                 }
             });
             holder.mLinearLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    if(mOnItemSelectedListenter!=null){
-                        mOnItemSelectedListenter.onItemSelected(v,position);
+                    if (mOnItemSelectedListenter != null) {
+                        mOnItemSelectedListenter.onItemSelected(v, position);
                     }
                     return true;
                 }
@@ -219,7 +219,7 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
         this.mTableHeadTextColor = mTableHeadTextColor;
     }
 
-    public void setItemBackgroud(List<Integer> row,List<Integer> column,List<Integer> itemColor){
+    public void setItemBackgroud(List<Integer> row, List<Integer> column, List<Integer> itemColor) {
         this.itemRow = row;
         this.itemColumn = column;
         this.itemColor = itemColor;
@@ -267,7 +267,7 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
      * @param datas
      * @param isFristRow   是否是第一行
      */
-    private void createRowView(LinearLayout linearLayout, List<String> datas, boolean isFristRow, int mMaxHeight,int position) {
+    private void createRowView(LinearLayout linearLayout, List<String> datas, boolean isFristRow, int mMaxHeight, int position) {
         //设置LinearLayout
         linearLayout.removeAllViews();//首先清空LinearLayout,复用会造成重复绘制，使内容超出预期长度
         for (int i = 0; i < datas.size(); i++) {
@@ -298,7 +298,7 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
             textViewParams.setMargins(mCellPadding, mCellPadding, mCellPadding, mCellPadding);
             textViewParams.height = DisplayUtil.dip2px(mContext, mMaxHeight);
             if (isLockFristColumn) {
-                textViewParams.width = DisplayUtil.dip2px(mContext, mColumnMaxWidths.get(i+1));
+                textViewParams.width = DisplayUtil.dip2px(mContext, mColumnMaxWidths.get(i + 1));
             } else {
                 textViewParams.width = DisplayUtil.dip2px(mContext, mColumnMaxWidths.get(i));
             }
@@ -308,11 +308,13 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
             layout.addView(textView);
             linearLayout.addView(layout);
 
-            for (int y = 0;y<itemRow.size();y++){
-                if (i == itemColumn.get(y) && position == itemRow.get(y)){
-                    layout.setBackgroundColor(ContextCompat.getColor(mContext,
-                            itemColor.get(y)));
-                    textView.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+            if (itemRow != null && itemColumn != null && itemColor != null) {
+                for (int y = 0; y < itemRow.size(); y++) {
+                    if (i == itemColumn.get(y) && position == itemRow.get(y)) {
+                        layout.setBackgroundColor(ContextCompat.getColor(mContext,
+                                itemColor.get(y)));
+                        textView.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+                    }
                 }
             }
 
