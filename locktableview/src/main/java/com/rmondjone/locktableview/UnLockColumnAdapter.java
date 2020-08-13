@@ -86,6 +86,10 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
      */
     private TableViewAdapter.OnItemSelectedListenter mOnItemSelectedListenter;
 
+    private List<Integer> itemRow;
+    private List<Integer> itemColumn;
+    private List<Integer> itemColor;
+
     /**
      * 构造方法
      *
@@ -114,15 +118,17 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
         ArrayList<String> datas = mTableDatas.get(position);
         if (isLockFristRow) {
             //第一行是锁定的
-            createRowView(holder.mLinearLayout, datas, false, mRowMaxHeights.get(position + 1));
+            createRowView(holder.mLinearLayout, datas, false, mRowMaxHeights.get(position + 1),position);
         } else {
             if (position == 0) {
                 holder.mLinearLayout.setBackgroundColor(ContextCompat.getColor(mContext, mFristRowBackGroudColor));
-                createRowView(holder.mLinearLayout, datas, true, mRowMaxHeights.get(position));
-            } else {
-                createRowView(holder.mLinearLayout, datas, false, mRowMaxHeights.get(position));
+                createRowView(holder.mLinearLayout, datas, true, mRowMaxHeights.get(position),position);
+            }else {
+                createRowView(holder.mLinearLayout, datas, false, mRowMaxHeights.get(position),position);
             }
+
         }
+
         //添加事件
         if(mOnItemClickListenter!=null){
             holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
@@ -212,6 +218,12 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
         this.mTableHeadTextColor = mTableHeadTextColor;
     }
 
+    public void setItemBackgroud(List<Integer> row,List<Integer> column,List<Integer> itemColor){
+        this.itemRow = row;
+        this.itemColumn = column;
+        this.itemColor = itemColor;
+    }
+
     public void setTableContentTextColor(int mTableContentTextColor) {
         this.mTableContentTextColor = mTableContentTextColor;
     }
@@ -237,11 +249,13 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
     }
 
     class UnLockViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout unlock_ll;
         LinearLayout mLinearLayout;
 
         public UnLockViewHolder(View itemView) {
             super(itemView);
             mLinearLayout = (LinearLayout) itemView.findViewById(R.id.unlock_linearlayout);
+            unlock_ll = (LinearLayout) itemView.findViewById(R.id.unlock_ll);
         }
     }
 
@@ -252,10 +266,21 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
      * @param datas
      * @param isFristRow   是否是第一行
      */
-    private void createRowView(LinearLayout linearLayout, List<String> datas, boolean isFristRow, int mMaxHeight) {
+    private void createRowView(LinearLayout linearLayout, List<String> datas, boolean isFristRow, int mMaxHeight,int position) {
         //设置LinearLayout
         linearLayout.removeAllViews();//首先清空LinearLayout,复用会造成重复绘制，使内容超出预期长度
         for (int i = 0; i < datas.size(); i++) {
+
+            LinearLayout layout = new LinearLayout(mContext);
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);// 定义布局管理器的参数
+            layout.setOrientation(LinearLayout.VERTICAL);// 所有组件垂直摆放
+            // 定义显示组件的布局管理器，为了简单，本次只定义一个TextView组件
+            LinearLayout.LayoutParams text = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);// 定义文本显示组件
+
             //构造单元格
             TextView textView = new TextView(mContext);
             if (isFristRow) {
@@ -277,7 +302,22 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
                 textViewParams.width = DisplayUtil.dip2px(mContext, mColumnMaxWidths.get(i));
             }
             textView.setLayoutParams(textViewParams);
-            linearLayout.addView(textView);
+//            linearLayout.addView(textView);
+            layout.addView(textView);
+            linearLayout.addView(layout);
+
+            for (int y = 0;y<itemRow.size();y++){
+                if (i == itemColumn.get(y) && position == itemRow.get(y)){
+                    layout.setBackgroundColor(ContextCompat.getColor(mContext,
+                            itemColor.get(y)));
+                    textView.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+                }
+            }
+
+            //4行3列
+//            if (i == 3 && position == 4) layout.setBackgroundColor(ContextCompat.getColor(mContext,
+//                    R.color.red));
+
             //画分隔线
             if (i != datas.size() - 1) {
                 View splitView = new View(mContext);

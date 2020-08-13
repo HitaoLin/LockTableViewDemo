@@ -199,6 +199,9 @@ public class LockTableView {
      */
     private TableViewAdapter mTableViewAdapter;
 
+    private List<Integer> itemRow;
+    private List<Integer> itemColumn;
+    private List<Integer> itemColor;
 
     /**
      * 构造方法
@@ -435,6 +438,8 @@ public class LockTableView {
         mTableViewAdapter.setTableContentTextColor(mTableContentTextColor);
         mTableViewAdapter.setTableHeadTextColor(mTableHeadTextColor);
         mTableViewAdapter.setFristRowBackGroudColor(mFristRowBackGroudColor);
+        //设置单元格背景颜色
+        mTableViewAdapter.setItemBackgroud(itemRow,itemColumn,itemColor);
         mTableViewAdapter.setHorizontalScrollView(new OnTableViewListener() {
             @Override
             public void onTableViewScrollChange(int x, int y) {
@@ -790,6 +795,14 @@ public class LockTableView {
 
     public LockTableView setTableContentTextColor(int mTableContentTextColor) {
         this.mTableContentTextColor = mTableContentTextColor;
+        return this;
+    }
+
+    //row行 column列
+    public LockTableView setItemBackground(List<Integer> row,List<Integer> column,List<Integer> itemColor){
+        this.itemRow = row;
+        this.itemColumn = column;
+        this.itemColor = itemColor;
         return this;
     }
 

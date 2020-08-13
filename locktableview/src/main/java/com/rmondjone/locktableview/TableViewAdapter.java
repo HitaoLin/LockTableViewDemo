@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.rmondjone.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 说明
@@ -118,6 +119,9 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.Tabl
      */
     private UnLockColumnAdapter mUnLockAdapter;
 
+    private List<Integer> itemRow;
+    private List<Integer> itemColumn;
+    private List<Integer> itemColor;
 
     /**
      * 构造方法
@@ -212,6 +216,7 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.Tabl
             mUnLockAdapter.setFristRowBackGroudColor(mFristRowBackGroudColor);
             mUnLockAdapter.setTableHeadTextColor(mTableHeadTextColor);
             mUnLockAdapter.setTableContentTextColor(mTableContentTextColor);
+            mUnLockAdapter.setItemBackgroud(itemRow,itemColumn,itemColor);
             mUnLockAdapter.setLockFristColumn(isLockColumn);
             mUnLockAdapter.setOnItemSelectedListenter(new OnItemSelectedListenter() {
                 @Override
@@ -338,6 +343,12 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.Tabl
 
     public void setTableContentTextColor(int mTableContentTextColor) {
         this.mTableContentTextColor = mTableContentTextColor;
+    }
+
+    public void setItemBackgroud(List<Integer> row, List<Integer> column, List<Integer> itemColor){
+        this.itemRow = row;
+        this.itemColumn = column;
+        this.itemColor = itemColor;
     }
 
     public void setHorizontalScrollView(LockTableView.OnTableViewListener mTableViewListener) {

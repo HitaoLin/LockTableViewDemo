@@ -16,10 +16,15 @@ import com.rmondjone.xrecyclerview.ProgressStyle;
 import com.rmondjone.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout mContentView;
+
+    private List<Integer> rowList = new ArrayList<>();
+    private List<Integer> columnList = new ArrayList<>();
+    private List<Integer> colorList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
         }
         final LockTableView mLockTableView = new LockTableView(this, mContentView, mTableDatas);
         Log.e("表格加载开始", "当前线程：" + Thread.currentThread());
+
+        rowList.add(3);
+        rowList.add(10);
+        rowList.add(25);
+        columnList.add(8);
+        columnList.add(1);
+        columnList.add(3);
+        colorList.add(R.color.blue);
+        colorList.add(R.color.red);
+        colorList.add(R.color.orange);
+
         mLockTableView.setLockFristColumn(true) //是否锁定第一列
                 .setLockFristRow(true) //是否锁定第一行
 //                .setMaxColumnWidth(100) //列最大宽度
@@ -61,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 //                .setColumnWidth(2,20)
 //                .setMinRowHeight(20)//行最小高度
 //                .setMaxRowHeight(60)//行最大高度
+                .setItemBackground(rowList,columnList,colorList)
                 .setTextViewSize(16) //单元格字体大小
                 .setFristRowBackGroudColor(R.color.table_head)//表头背景色
                 .setTableHeadTextColor(R.color.beijin)//表头字体颜色
