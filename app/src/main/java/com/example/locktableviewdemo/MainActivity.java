@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> mRowDatas = new ArrayList<String>();
             mRowDatas.add(i+"行");
             for (int j = 0; j < 10; j++) {
+                if (i == 0 &&j == 0){
+                    mRowDatas.add(i+"行" + j+"列"+"\n测试测试测试测试测试测试测试测试测试测试从11123156498481181试测试从1试测试从1试测试从1试测试从1试测试从189131531351");
+                }else
                 mRowDatas.add(i+"行" + j+"列");
             }
             mTableDatas.add(mRowDatas);

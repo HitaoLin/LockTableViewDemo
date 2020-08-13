@@ -3,6 +3,7 @@ package com.rmondjone.locktableview;
 import android.content.Context;
 import android.graphics.Color;
 
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -302,6 +303,7 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
                 textViewParams.width = DisplayUtil.dip2px(mContext, mColumnMaxWidths.get(i));
             }
             textView.setLayoutParams(textViewParams);
+            textView.setEllipsize(TextUtils.TruncateAt.END);
 //            linearLayout.addView(textView);
             layout.addView(textView);
             linearLayout.addView(layout);

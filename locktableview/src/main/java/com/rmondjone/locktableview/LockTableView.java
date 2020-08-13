@@ -343,11 +343,12 @@ public class LockTableView {
                     if (mChangeColumns.size() > 0 && mChangeColumns.containsKey(j)) {
                         currentHeight = getTextViewHeight(textView, rowDatas.get(j), mChangeColumns.get(j));
                     } else {
-                        currentHeight = measureTextHeight(textView, rowDatas.get(j));
+                        currentHeight = getTextViewHeight(textView,rowDatas.get(j));
+//                        currentHeight = measureTextHeight(textView, rowDatas.get(j));
                     }
                     buffer.append("[" + currentHeight + "]");
                     if (currentHeight > maxHeight) {
-                        mRowMaxHeights.set(i, currentHeight);
+                        mRowMaxHeights.set(i, currentHeight+mCellPadding);
                     }
                 }
 //                Log.e("第"+i+"行高度",buffer.toString());
