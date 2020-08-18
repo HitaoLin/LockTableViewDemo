@@ -2,11 +2,13 @@ package com.example.locktableviewdemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
@@ -26,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private List<Integer> columnList = new ArrayList<>();
     private List<Integer> colorList = new ArrayList<>();
 
+    private int columnSize = 3;
+    private int cellPadding = 10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void initData() {
         mContentView = (LinearLayout) findViewById(R.id.contentView);
         initDisplayOpinion();
@@ -44,16 +50,17 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<ArrayList<String>> mTableDatas = new ArrayList<ArrayList<String>>();
         ArrayList<String> mfristData = new ArrayList<String>();
         mfristData.add("标题");
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < columnSize; i++) {
             mfristData.add(i+"列");
         }
         mTableDatas.add(mfristData);
         for (int i = 0; i < 20; i++) {
             ArrayList<String> mRowDatas = new ArrayList<String>();
             mRowDatas.add(i+"行");
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < columnSize; j++) {
                 if (i == 0 &&j == 0){
-                    mRowDatas.add(i+"行" + j+"列"+"\n测试测试测试测试测试测试测试测试测试测试从11123156498481181试测试从1试测试从1试测试从1试测试从1试测试从189131531351");
+//                    mRowDatas.add(i+"行" + j+"列"+"\n测试测试测试测试测试测试测试测试测试测试从11123156498481181试测试从1试测试从1试测试从1试测试从1试测试从189131531351");
+                    mRowDatas.add(i+"行" + j+"列");
                 }else
                 mRowDatas.add(i+"行" + j+"列");
             }
@@ -74,18 +81,19 @@ public class MainActivity extends AppCompatActivity {
 
         mLockTableView.setLockFristColumn(true) //是否锁定第一列
                 .setLockFristRow(true) //是否锁定第一行
-//                .setMaxColumnWidth(100) //列最大宽度
-//                .setMinColumnWidth(60) //列最小宽度
+//                .setMinColumnWidth(80) //列最小宽度
+                //列平分
+                .setMinColumnWidth(ScreenUtil.getScreenWidth(getApplicationContext())/4-cellPadding*2) //列最小宽度
 //                .setColumnWidth(1,30) //设置指定列文本宽度
 //                .setColumnWidth(2,20)
 //                .setMinRowHeight(20)//行最小高度
 //                .setMaxRowHeight(60)//行最大高度
                 .setItemBackground(rowList,columnList,colorList)
-                .setTextViewSize(16) //单元格字体大小
+                .setTextViewSize(12) //单元格字体大小
                 .setFristRowBackGroudColor(R.color.table_head)//表头背景色
                 .setTableHeadTextColor(R.color.beijin)//表头字体颜色
                 .setTableContentTextColor(R.color.border_color)//单元格字体颜色
-                .setCellPadding(15)//设置单元格内边距(dp)
+                .setCellPadding(cellPadding)//设置单元格内边距(dp)
                 .setNullableString("N/A") //空值替换值
                 .setTableViewListener(new LockTableView.OnTableViewListener() {
                     @Override
@@ -117,14 +125,14 @@ public class MainActivity extends AppCompatActivity {
                                 ArrayList<ArrayList<String>> mTableDatas = new ArrayList<ArrayList<String>>();
                                 ArrayList<String> mfristData = new ArrayList<String>();
                                 mfristData.add("标题");
-                                for (int i = 0; i < 10; i++) {
+                                for (int i = 0; i < columnSize; i++) {
                                     mfristData.add(i+"列");
                                 }
                                 mTableDatas.add(mfristData);
                                 for (int i = 0; i < 20; i++) {
                                     ArrayList<String> mRowDatas = new ArrayList<String>();
                                     mRowDatas.add(i+"行");
-                                    for (int j = 0; j < 10; j++) {
+                                    for (int j = 0; j < columnSize; j++) {
                                         mRowDatas.add(i+"行" + j+"列");
                                     }
                                     mTableDatas.add(mRowDatas);
@@ -143,10 +151,10 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if (mTableDatas.size() <= 60) {
-                                    for (int i = 0; i < 10; i++) {
+                                    for (int i = 0; i < columnSize; i++) {
                                         ArrayList<String> mRowDatas = new ArrayList<String>();
                                         mRowDatas.add((mTableDatas.size() - 1)+"行");
-                                        for (int j = 0; j < 10; j++) {
+                                        for (int j = 0; j < columnSize; j++) {
                                             mRowDatas.add((mTableDatas.size() - 1)+"行" + j+"列");
                                         }
                                         mTableDatas.add(mRowDatas);
