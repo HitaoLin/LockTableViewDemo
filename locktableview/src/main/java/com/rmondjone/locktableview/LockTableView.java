@@ -120,6 +120,9 @@ public class LockTableView {
      * Item点击事件
      */
     private OnItemClickListenter mOnItemClickListenter;
+
+    private OnRVItemClickListenter mOnRVItemClickListenter;
+
     /**
      * Item长按事件
      */
@@ -453,6 +456,11 @@ public class LockTableView {
         if (mOnItemLongClickListenter != null) {
             mTableViewAdapter.setOnItemLongClickListenter(mOnItemLongClickListenter);
         }
+
+        if (mOnRVItemClickListenter != null) {
+            mTableViewAdapter.setOnRVItemClickListenter(mOnRVItemClickListenter);
+        }
+
         if (mOnItemSeletor != 0) {
             mTableViewAdapter.setOnItemSeletor(mOnItemSeletor);
         } else {
@@ -832,6 +840,11 @@ public class LockTableView {
         return this;
     }
 
+    public LockTableView setRVOnItemClickListenter(OnRVItemClickListenter mOnRVItemClickListenter) {
+        this.mOnRVItemClickListenter = mOnRVItemClickListenter;
+        return this;
+    }
+
     public LockTableView setOnItemClickListenter(OnItemClickListenter mOnItemClickListenter) {
         this.mOnItemClickListenter = mOnItemClickListenter;
         return this;
@@ -991,6 +1004,17 @@ public class LockTableView {
          */
         void onItemClick(View item, int position);
     }
+
+    public interface OnRVItemClickListenter {
+
+        /**
+         * @param item
+         * @param row     行
+         * @param column 列
+         */
+        void onRVItemClick(View item, int row,int column);
+    }
+
 
     /**
      * 说明 Item长按事件

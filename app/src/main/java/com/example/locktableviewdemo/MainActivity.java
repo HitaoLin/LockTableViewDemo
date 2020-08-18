@@ -180,6 +180,12 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("长按事件",position+"");
                     }
                 })
+                .setRVOnItemClickListenter(new LockTableView.OnRVItemClickListenter() {
+                    @Override
+                    public void onRVItemClick(View item, int row, int column) {
+                        Log.e("RVItem事件",row+"行"+column+"列");
+                    }
+                })
                 .setOnItemSeletor(R.color.dashline_color)//设置Item被选中颜色
                 .show(); //显示表格,此方法必须调用
         mLockTableView.getTableScrollView().setPullRefreshEnabled(true);

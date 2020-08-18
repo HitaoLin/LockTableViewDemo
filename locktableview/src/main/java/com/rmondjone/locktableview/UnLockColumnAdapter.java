@@ -78,6 +78,11 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
     private LockTableView.OnItemClickListenter mOnItemClickListenter;
 
     /**
+     * Recyclerview Item点击事件
+     */
+    private LockTableView.OnRVItemClickListenter mOnRVItemClickListenter;
+
+    /**
      * Item长按事件
      */
     private LockTableView.OnItemLongClickListenter mOnItemLongClickListenter;
@@ -90,6 +95,7 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
     private List<Integer> itemRow;
     private List<Integer> itemColumn;
     private List<Integer> itemColor;
+
 
     /**
      * 构造方法
@@ -241,6 +247,10 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
         this.mOnItemLongClickListenter = mOnItemLongClickListenter;
     }
 
+    public void setOnRVItemClickListenter(LockTableView.OnRVItemClickListenter mOnRVItemClickListenter) {
+        this.mOnRVItemClickListenter = mOnRVItemClickListenter;
+    }
+
     public void setOnItemSelectedListenter(TableViewAdapter.OnItemSelectedListenter mOnItemSelectedListenter) {
         this.mOnItemSelectedListenter = mOnItemSelectedListenter;
     }
@@ -267,12 +277,12 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
      * @param datas
      * @param isFristRow   是否是第一行
      */
-    private void createRowView(LinearLayout linearLayout, List<String> datas, boolean isFristRow, int mMaxHeight, int position) {
+    private void createRowView(LinearLayout linearLayout, List<String> datas, boolean isFristRow, int mMaxHeight, final int position) {
         //设置LinearLayout
         linearLayout.removeAllViews();//首先清空LinearLayout,复用会造成重复绘制，使内容超出预期长度
         for (int i = 0; i < datas.size(); i++) {
 
-            LinearLayout layout = new LinearLayout(mContext);
+            final LinearLayout layout = new LinearLayout(mContext);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);// 定义布局管理器的参数
@@ -335,6 +345,17 @@ public class UnLockColumnAdapter extends RecyclerView.Adapter<UnLockColumnAdapte
                 }
                 linearLayout.addView(splitView);
             }
+
+            final int finalI = i;
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mOnRVItemClickListenter != null) {
+                        mOnRVItemClickListenter.onRVItemClick(view, position, finalI);
+                    }
+                }
+            });
+
         }
     }
 }

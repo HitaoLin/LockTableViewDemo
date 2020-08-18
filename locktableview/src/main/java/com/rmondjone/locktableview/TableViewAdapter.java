@@ -93,6 +93,8 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.Tabl
      */
     private LockTableView.OnItemClickListenter mOnItemClickListenter;
 
+    private LockTableView.OnRVItemClickListenter mOnRVItemClickListenter;
+
     /**
      * Item长按事件
      */
@@ -249,6 +251,9 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.Tabl
             if (mOnItemLongClickListenter != null) {
                 mUnLockAdapter.setOnItemLongClickListenter(mOnItemLongClickListenter);
             }
+            if (mOnRVItemClickListenter != null) {
+                mUnLockAdapter.setOnRVItemClickListenter(mOnRVItemClickListenter);
+            }
             LinearLayoutManager unlockLayoutManager = new LinearLayoutManager(mContext);
             unlockLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             holder.mMainRecyclerView.setLayoutManager(unlockLayoutManager);
@@ -365,6 +370,10 @@ public class TableViewAdapter extends RecyclerView.Adapter<TableViewAdapter.Tabl
 
     public void setOnItemClickListenter(LockTableView.OnItemClickListenter mOnItemClickListenter) {
         this.mOnItemClickListenter = mOnItemClickListenter;
+    }
+
+    public void setOnRVItemClickListenter(LockTableView.OnRVItemClickListenter mOnRVItemClickListenter) {
+        this.mOnRVItemClickListenter = mOnRVItemClickListenter;
     }
 
     public void setOnItemLongClickListenter(LockTableView.OnItemLongClickListenter mOnItemLongClickListenter) {
